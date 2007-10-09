@@ -313,10 +313,10 @@ class BitReBlog extends BitBase {
 function reblog_content_load_sql( &$pObject, $pParamHash = NULL ) {
 	global $gBitSystem;
 	$ret = array();
-	if ( $gBitSystem->isPackageActive( 'reblog' ) ) {
+	if ( $gBitSystem->isPackageActive( 'reblog' ) && $pObject->mContentTypeGuid == 'bitblogpost' ) {
 		$ret['select_sql'] = ", rf.`feed_id`, rf.`name`, rf.`description`, rf.`url`";
-		$ret['join_sql'] = "INNER JOIN `".BIT_DB_PREFIX."reblog_items_map` rim ON ( lc.`content_id`=rim.`content_id` )
-							INNER JOIN `".BIT_DB_PREFIX."reblog_feeds` rf ON ( rf.`feed_id`=rim.`feed_id` )";
+		$ret['join_sql'] = "LEFT JOIN `".BIT_DB_PREFIX."reblog_items_map` rim ON ( lc.`content_id`=rim.`content_id` )
+							LEFT JOIN `".BIT_DB_PREFIX."reblog_feeds` rf ON ( rf.`feed_id`=rim.`feed_id` )";
 	}
 	return $ret;
 }
@@ -324,11 +324,13 @@ function reblog_content_load_sql( &$pObject, $pParamHash = NULL ) {
 function reblog_content_list_sql( &$pObject, $pParamHash=NULL ) {
 	global $gBitSystem;
 	$ret = array();
-	if ( $gBitSystem->isPackageActive( 'reblog' ) && $gBitSystem->mActivePackage == 'reblog' ) {
+	if ( $gBitSystem->isPackageActive( 'reblog' ) && $pObject->mContentTypeGuid == 'bitblogpost') {
 		$ret['select_sql'] = ", rf.`feed_id`, rf.`name`, rf.`description`, rf.`url`";
-		$ret['join_sql'] = "INNER JOIN `".BIT_DB_PREFIX."reblog_items_map` rim ON ( lc.`content_id`=rim.`content_id` )
-							INNER JOIN `".BIT_DB_PREFIX."reblog_feeds` rf ON ( rf.`feed_id`=rim.`feed_id` )";
-		$ret['where_sql'] = ' AND rim.`content_id` IS NOT NULL ';
+		$ret['join_sql'] = "LEFT JOIN `".BIT_DB_PREFIX."reblog_items_map` rim ON ( lc.`content_id`=rim.`content_id` )
+							LEFT JOIN `".BIT_DB_PREFIX."reblog_feeds` rf ON ( rf.`feed_id`=rim.`feed_id` )";
+		if ($gBitSystem->mActivePackage == 'reblog'){
+			$ret['where_sql'] = ' AND rim.`content_id` IS NOT NULL ';
+		}
 	}
 	return $ret;
 }
