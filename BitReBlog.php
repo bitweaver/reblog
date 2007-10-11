@@ -207,13 +207,14 @@ class BitReBlog extends BitBase {
 			$listHash['max_records'] = count( $feedItems );
 			
 			$storedItems = $this->getItems( $listHash );
+			
 			foreach( $feedItems as $item ){
 				$new = TRUE;
 				// check ids in feed against items
 				if ( $storedItems != null ){
 					foreach( $storedItems as $stored ){
 						$itemId = pack('H*', $item->get_id(TRUE));
-						if ( $itemid == $stored['item_id'] ){
+						if ( $itemId == $stored['item_id'] ){
 							$new = FALSE;
 							break;
 						}
@@ -242,18 +243,19 @@ class BitReBlog extends BitBase {
 		$postHash['data'] = $pParamHash['item']->get_content();
 		$postHash['title'] = $pParamHash['item']->get_title();		
 		//$postHash['blog_content_id'] = ( !empty($this->mInfo['blog_content_id'] )?$this->mInfo['blog_content_id']:NULL;
-		if ( $post = $blogPost->store( $postHash ) ){
+		if ( $blogPost->store( $postHash ) ){
 			$itemHash;
-			$itemHash['blog_post_content_id'] = $post->mInfo['content_id'];
-			$itemHash['item_id'] = pack('H*', $pItem->get_id(TRUE));
+			$itemHash['content_id'] = $blogPost->mInfo['content_id'];
+			$itemHash['item_id'] = pack('H*', $pParamHash['item']->get_id(TRUE));
 			$itemHash['feed_id'] = $this->mFeedId;
+			
 			//store a reference to the blog post item in the reblog item map
 			$this->mDb->StartTrans();
 			$table = BIT_DB_PREFIX."reblog_items_map";
 			$result = $this->mDb->associateInsert( $table, $itemHash );
 			$this->mDb->CompleteTrans();
 		}
-		return( $post->mErrors );
+		return( $blogPost->mErrors );
 	}
 
 	
