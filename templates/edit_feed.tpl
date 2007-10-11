@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_reblog/templates/edit_feed.tpl,v 1.1 2007/10/08 22:37:54 bitweaver Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_reblog/templates/edit_feed.tpl,v 1.2 2007/10/11 17:32:32 spiderr Exp $ *}
 {strip}
 <div class="edit reblog">
 	<div class="header">
@@ -34,7 +34,7 @@
 				<div class="row">
 					{formlabel label="User ID" for="user_id"}
 					{forminput}
-						<input type="text" size="5" name="user_id" id="user_id" value="{$feedInfo.user_content_id}" />
+						<input type="text" size="5" name="user_id" id="user_id" value="{$feedInfo.user_content_id|default:$gBitUser->mUserId}" />
 						{formhelp note="Each feed must be associated with a user id so that reblogged posts are attributable to someone. It is recommended that you set up a unique user to represent each site you are reblogging from. The user account will let you give the feeding site a complete profile."}
 					{/forminput}
 				</div>
