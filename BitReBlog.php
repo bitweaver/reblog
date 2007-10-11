@@ -176,9 +176,10 @@ class BitReBlog extends BitBase {
 		if( @$this->verifyId( $pParamHash['feed_id'] ) ) {
 			$bindVars = array();
 			array_push( $bindVars, (int)$pParamHash['feed_id'] );
-			$whereSql .= 'rim.`feed_id` = ?';
+			$whereSql = 'rim.`feed_id` = ?';
 
-			$sort_mode = $sort_mode_prefix . '.' . $this->mDb->convertSortmode( 'feed_id_desc' );
+			$sortModePrefix = 'rim';
+			$sort_mode = $sortModePrefix . '.' . $this->mDb->convertSortmode( 'feed_id_desc' );
 
 			$query = "SELECT * FROM `".BIT_DB_PREFIX."reblog_items_map` rim 
 						WHERE $whereSql
@@ -196,30 +197,33 @@ class BitReBlog extends BitBase {
 	}
 	
 	/**
-	* This function gets a feed and checks if any of its items is new
+	* This function checks if any of a feed's items is new
 	**/
 	function updateFeed(){
 		// parse feed
-		$feeditems = $this->parseFeeds( $this->mFeedId );
-		
-		$listHash = array();
-		$listHash['feed_id'] = $this->mFeedId;
-		$listHash['max_records'] = $items->get_item_quantity();
-		
-		$storeditems = $this->getItems( $listHash );
-		
-		foreach( $feeditems as $item ){
-			// check ids in feed against items
-			foreach( $storeditems as $stored ){
-				$new == TRUE;
-				$itemId = pack('H*', $pItem->get_id(TRUE));
-				if ( $itemid == $stored['item_id'] ){
-					$new = FALSE;
-					break;
+		if ( $feedItems = $this->parseFeeds( $this->mInfo ) ){
+			$listHash = array();
+			$listHash['feed_id'] = $this->mFeedId;
+			$listHash['max_records'] = count( $feedItems );
+			
+			$storedItems = $this->getItems( $listHash );
+			foreach( $feedItems as $item ){
+				$new = TRUE;
+				// check ids in feed against items
+				if ( $storedItems != null ){
+					foreach( $storedItems as $stored ){
+						$itemId = pack('H*', $item->get_id(TRUE));
+						if ( $itemid == $stored['item_id'] ){
+							$new = FALSE;
+							break;
+						}
+					}
 				}
-				if ( $new == TRUE ){
-					if( $errors = $this->reblogItem( $item ) ) {
-						$this->mErrors['reblog'] = $errors;
+				if ( $new ){
+					$storeHash['item'] = $item;
+					$storeHash['user_id'] = $this->mInfo['user_content_id'];
+					if( $errors = $this->reblogItem( $storeHash ) ) {
+						$this->mErrors['reblog'][] = $errors;
 					}
 				}
 			}
@@ -230,14 +234,16 @@ class BitReBlog extends BitBase {
 	/**
 	* This function stores a RSS feed item as a blog post
 	**/
-	function reblogItem( &$pItem ){
-		require_once( BLOGS_PKG_URL.'BitBlogPost.php' );
+	function reblogItem( &$pParamHash ){
+		require_once( BLOGS_PKG_PATH.'BitBlogPost.php');
 		$blogPost = new BitBlogPost();
 		$postHash = array();
-		$postHash['user_id'] = $this->mInfo['user_id'];
-		$postHash['data'] = $pItem->get_content();
+		$postHash['user_id'] = $pParamHash['user_id'];
+		$postHash['data'] = $pParamHash['item']->get_content();
+		$postHash['title'] = $pParamHash['item']->get_title();		
 		//$postHash['blog_content_id'] = ( !empty($this->mInfo['blog_content_id'] )?$this->mInfo['blog_content_id']:NULL;
-		if ( $post = $blogPost->store( $itemHash ) ){
+		if ( $post = $blogPost->store( $postHash ) ){
+			$itemHash;
 			$itemHash['blog_post_content_id'] = $post->mInfo['content_id'];
 			$itemHash['item_id'] = pack('H*', $pItem->get_id(TRUE));
 			$itemHash['feed_id'] = $this->mFeedId;
@@ -249,6 +255,7 @@ class BitReBlog extends BitBase {
 		}
 		return( $post->mErrors );
 	}
+
 	
 	/**
 	* This function parses the data of feeds passed to it. 
@@ -269,6 +276,7 @@ class BitReBlog extends BitBase {
 			//load up parser SimplePie
 			require_once( UTIL_PKG_PATH.'simplepie/simplepie.inc' );
 
+			/* 
 			if (!is_array($pParamHash['feed_id'])){
 				$ids = explode( ",", $pParamHash['feed_id'] );
 			}else{
@@ -286,9 +294,16 @@ class BitReBlog extends BitBase {
 					//$repl = '<b>rss can not be found, id must be a number</b>';
 				}
 			}
+			*/
+			$urls = Array();
+			if (!is_array($pParamHash['url'])){
+				$urls = explode( ",", $pParamHash['url'] );
+			}else{
+				$urls[] = $pParamHash['url'];
+			}
 			
 			$feed = new SimplePie();
-			 
+			
 			//Instead of only passing in one feed url, we'll pass in an array of multiple feeds
 			$feed->set_feed_url( $urls );
 			
