@@ -9,18 +9,21 @@
  * suggested crontab entry runs the thumbnailer every minute:
  *		* * * * * apache php -q /path/to/bitweaver/reblog/update_feeds.php >> /var/log/httpd/update_feeds_log
  *
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.1 2007/10/09 21:04:21 wjames5 Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.2 2007/10/11 17:40:13 spiderr Exp $
  * @package reblog
  * @subpackage functions
  */
 
 	global $gBitSystem, $_SERVER;
 
-	$_SERVER['SCRIPT_URL'] = '';
-	$_SERVER['HTTP_HOST'] = '';
-	$_SERVER['HTTP_HOST'] = '';
-	$_SERVER['HTTP_HOST'] = '';
-	$_SERVER['SERVER_NAME'] = '';
+	if( !empty( $argc ) ) {
+		$_SERVER['SCRIPT_URL'] = '';
+		$_SERVER['HTTP_HOST'] = '';
+		$_SERVER['HTTP_HOST'] = '';
+		$_SERVER['HTTP_HOST'] = '';
+		$_SERVER['SERVER_NAME'] = '';
+		define( 'BIT_ROOT_URI', '' );
+	}
 
 /**
  * required setup
