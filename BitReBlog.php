@@ -218,10 +218,13 @@ class BitReBlog extends BitBase {
 					break;
 				}
 				if ( $new == TRUE ){
-					$this->reblogItem( $item );
+					if( $errors = $this->reblogItem( $item ) ) {
+						$this->mErrors['reblog'] = $errors;
+					}
 				}
 			}
 		}
+		return( count( $this->mErrors ) );
 	}
 
 	/**
@@ -244,6 +247,7 @@ class BitReBlog extends BitBase {
 			$result = $this->mDb->associateInsert( $table, $itemHash );
 			$this->mDb->CompleteTrans();
 		}
+		return( $post->mErrors );
 	}
 	
 	/**

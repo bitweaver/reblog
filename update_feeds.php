@@ -9,7 +9,7 @@
  * suggested crontab entry runs the thumbnailer every minute:
  *		* * * * * apache php -q /path/to/bitweaver/reblog/update_feeds.php >> /var/log/httpd/update_feeds_log
  *
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.3 2007/10/11 17:50:19 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.4 2007/10/11 18:08:43 spiderr Exp $
  * @package reblog
  * @subpackage functions
  */
@@ -56,7 +56,7 @@
 			$begin = date( 'U' );
 			if ( !$feed->updateFeed() ){
 				$error = TRUE;
-				$log[$feedHash]['message'] = ' ERROR: '.$feed->mErrors['items'];
+				$log[$feedHash]['message'] = ' ERROR: '.implode( ',', $feed->mErrors['reblog'] );
 			}
 			$log[$feedHash]['time'] = date( 'd/M/Y:H:i:s O' );
 			$log[$feedHash]['duration'] = date( 'U' ) - $begin;
