@@ -9,7 +9,7 @@
  * suggested crontab entry runs the thumbnailer every minute:
  *		* * * * * apache php -q /path/to/bitweaver/reblog/update_feeds.php >> /var/log/httpd/update_feeds_log
  *
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.2 2007/10/11 17:40:13 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.3 2007/10/11 17:50:19 spiderr Exp $
  * @package reblog
  * @subpackage functions
  */
@@ -45,7 +45,7 @@
 	}
 	
 	$reblog = new BitReBlog();
-	$feedsList = $reblog->getList();
+	$feedsList = $reblog->getList( $_REQUEST );
 
 	$log = array();
 	$total = date( 'U' );
@@ -55,6 +55,7 @@
 			$feed = new BitReBlog( $feedHash['feed_id'] );
 			$begin = date( 'U' );
 			if ( !$feed->updateFeed() ){
+				$error = TRUE;
 				$log[$feedHash]['message'] = ' ERROR: '.$feed->mErrors['items'];
 			}
 			$log[$feedHash]['time'] = date( 'd/M/Y:H:i:s O' );
@@ -65,7 +66,11 @@
 
 	foreach( array_keys( $log ) as $feedHash ) {
 		// generate something that kinda looks like apache common log format
-		print $feedHash.' - - ['.$log[$feedHash]['time'].'] "'.$log[$feedHash]['message'].'" '.$log[$feedHash]['duration']."seconds <br/>\n";
+		$logLine = $feedHash.' - - ['.$log[$feedHash]['time'].'] "'.$log[$feedHash]['message'].'" '.$log[$feedHash]['duration']."seconds <br/>\n";
+		if( strpos( $log[$feedHash['message']], 'ERROR' ) !== FALSE ) {
+			bit_log_error( $logLine );
+		}
+		print $logLine;
 	}
 
 	if( count($feedsList) ) {
