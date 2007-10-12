@@ -205,6 +205,7 @@ class BitReBlog extends BitBase {
 	* This function checks if any of a feed's items is new
 	**/
 	function updateFeed(){
+		global $gBitSystem;
 		// parse feed
 		if ( $feedItems = $this->parseFeeds( $this->mInfo ) ){
 			$listHash = array();
@@ -234,6 +235,13 @@ class BitReBlog extends BitBase {
 					}
 				}
 			}
+			// when where done posting all the items update the feed record with the time
+			$this->mDb->StartTrans();
+			$feedHash;
+			$feedHash['last_updated'] = $gBitSystem->getUTCTime();
+			$table = BIT_DB_PREFIX."reblog_feeds";
+			$result = $this->mDb->associateUpdate( $table, $feedHash, array( "feed_id" => $this->mFeedId ) );
+			$this->mDb->CompleteTrans();
 		}
 		return ( count( $this->mErrors ) == 0 );
 	}
@@ -249,11 +257,11 @@ class BitReBlog extends BitBase {
 		$postHash['data'] = $pParamHash['item']->get_content();
 		$postHash['title'] = $pParamHash['item']->get_title();
 		if ( $blogPost->store( $postHash ) ){
-			$itemHash;
+			$itemHash; 
 			$itemHash['content_id'] = $blogPost->mInfo['content_id'];
 			$itemHash['item_id'] = $pParamHash['item']->get_id(TRUE);
 			$itemHash['feed_id'] = $this->mFeedId;
-			
+						
 			//store a reference to the blog post item in the reblog item map
 			$this->mDb->StartTrans();
 			$table = BIT_DB_PREFIX."reblog_items_map";
