@@ -83,7 +83,7 @@ class BitReBlog extends BitBase {
 		}
 		
 		$pParamHash['feed_store']['last_updated'] = $gBitSystem->getUTCTime();
-		vd($this->mErrors);
+
 		return( count( $this->mErrors ) == 0 );
 	}	
 	
@@ -142,16 +142,21 @@ class BitReBlog extends BitBase {
 		global $gBitSystem;
 		$ret = NULL;
 
+		$selectSql = ''; $joinSql = ''; $whereSql = '';
 		$bindVars = array();
 		
 		$sort_mode_prefix = 'fd';
-
 		$sortHash = array(
 			'feed_id_desc',
 			'feed_id_asc',
 			'name_asc',
 			'name_desc',
 		);
+		
+		if (!empty( $pParamHash['auto_only'] ) ){
+			$whereSql .= "WHERE reblog = ?";
+			$bindVars[]= 'y';
+		}
 
 		if( empty( $pParamHash['sort_mode'] ) || in_array( $pParamHash['sort_mode'], $sortHash ) ) {
 			$pParamHash['sort_mode'] = 'name_asc';
@@ -159,7 +164,7 @@ class BitReBlog extends BitBase {
 		
 		$sort_mode = $sort_mode_prefix . '.' . $this->mDb->convertSortmode( $pParamHash['sort_mode'] );
 		
-		$query = "SELECT * FROM `".BIT_DB_PREFIX."reblog_feeds` fd ORDER BY $sort_mode";
+		$query = "SELECT * FROM `".BIT_DB_PREFIX."reblog_feeds` fd $whereSql ORDER BY $sort_mode";
 		$result = $this->mDb->query( $query, $bindVars );
 		$ret = array();
 		while ($res = $result->fetchrow()) {
@@ -179,7 +184,7 @@ class BitReBlog extends BitBase {
 			$whereSql = 'rim.`feed_id` = ?';
 
 			$sortModePrefix = 'rim';
-			$sort_mode = $sortModePrefix . '.' . $this->mDb->convertSortmode( 'feed_id_desc' );
+			$sort_mode = $sortModePrefix . '.' . $this->mDb->convertSortmode( 'content_id_desc' );
 
 			$query = "SELECT * FROM `".BIT_DB_PREFIX."reblog_items_map` rim 
 						WHERE $whereSql
@@ -207,13 +212,14 @@ class BitReBlog extends BitBase {
 			$listHash['max_records'] = count( $feedItems );
 			
 			$storedItems = $this->getItems( $listHash );
-			
+			krsort($storedItems);
+
 			foreach( $feedItems as $item ){
 				$new = TRUE;
 				// check ids in feed against items
+				$itemId = $item->get_id(TRUE);
 				if ( $storedItems != null ){
 					foreach( $storedItems as $stored ){
-						$itemId = pack('H*', $item->get_id(TRUE));
 						if ( $itemId == $stored['item_id'] ){
 							$new = FALSE;
 							break;
@@ -229,7 +235,7 @@ class BitReBlog extends BitBase {
 				}
 			}
 		}
-		return( count( $this->mErrors ) );
+		return ( count( $this->mErrors ) == 0 );
 	}
 
 	/**
@@ -241,12 +247,11 @@ class BitReBlog extends BitBase {
 		$postHash = array();
 		$postHash['user_id'] = $pParamHash['user_id'];
 		$postHash['data'] = $pParamHash['item']->get_content();
-		$postHash['title'] = $pParamHash['item']->get_title();		
-		//$postHash['blog_content_id'] = ( !empty($this->mInfo['blog_content_id'] )?$this->mInfo['blog_content_id']:NULL;
+		$postHash['title'] = $pParamHash['item']->get_title();
 		if ( $blogPost->store( $postHash ) ){
 			$itemHash;
 			$itemHash['content_id'] = $blogPost->mInfo['content_id'];
-			$itemHash['item_id'] = pack('H*', $pParamHash['item']->get_id(TRUE));
+			$itemHash['item_id'] = $pParamHash['item']->get_id(TRUE);
 			$itemHash['feed_id'] = $this->mFeedId;
 			
 			//store a reference to the blog post item in the reblog item map

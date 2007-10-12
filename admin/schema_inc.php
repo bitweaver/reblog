@@ -12,7 +12,7 @@ $tables = array(
 ",
 
 "reblog_items_map" => "
-	item_id I4 B PRIMARY,
+	item_id C(40) PRIMARY,
 	content_id I4 NOTNULL,
 	feed_id I4 I4 NOTNULL
 	CONSTRAINT '

@@ -9,7 +9,7 @@
  * suggested crontab entry runs the thumbnailer every minute:
  *		* * * * * apache php -q /path/to/bitweaver/reblog/update_feeds.php >> /var/log/httpd/update_feeds_log
  *
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.5 2007/10/11 19:40:11 wjames5 Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.6 2007/10/12 15:53:22 wjames5 Exp $
  * @package reblog
  * @subpackage functions
  */
@@ -45,23 +45,26 @@
 	}
 	
 	$reblog = new BitReBlog();
+	
+	$_REQUEST['auto_only'] = TRUE;
 	$feedsList = $reblog->getList( $_REQUEST );
-
+	
 	$log = array();
 	$total = date( 'U' );
 	$currTime = $gBitSystem->getUTCTime();
-	foreach( $feedsList as $feedHash ) {
+	foreach( array_keys( $feedsList ) as $key ) {
+		$feedHash = $feedsList[$key];
 		if ( (( $feedHash['last_updated'] + $feedHash['refresh'] ) < $currTime) ){
 			$feed = new BitReBlog( $feedHash['feed_id'] );
 			$feed->load();
 			$begin = date( 'U' );
 			if ( !$feed->updateFeed() ){
 				$error = TRUE;
-				$log[$feedHash]['message'] = ' ERROR: '.implode( ',', $feed->mErrors['reblog'] );
+				$log[$key]['message'] = ' ERROR: '.implode( ',', $feed->mErrors['reblog'] );
 			}
-			$log[$feedHash]['time'] = date( 'd/M/Y:H:i:s O' );
-			$log[$feedHash]['duration'] = date( 'U' ) - $begin;
-			$log[$feedHash]['delay'] = date( 'U' ) - $total;
+			$log[$key]['time'] = date( 'd/M/Y:H:i:s O' );
+			$log[$key]['duration'] = date( 'U' ) - $begin;
+			$log[$key]['delay'] = date( 'U' ) - $total;
 		}
 	}
 
