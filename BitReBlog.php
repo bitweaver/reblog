@@ -208,17 +208,42 @@ class BitReBlog extends BitBase {
 		global $gBitSystem;
 		// parse feed
 		if ( $feedItems = $this->parseFeeds( $this->mInfo ) ){
+			/* feeds are parsed newest first - 
+			 * but for storing we want to store the 
+			 * oldest first so that when we check them 
+			 * later, the newer items have 
+			 * larger content ids
+			 */
+			$feedItems = array_reverse($feedItems);
+		
 			$listHash = array();
 			$listHash['feed_id'] = $this->mFeedId;
 			$listHash['max_records'] = count( $feedItems );
-			
+
 			$storedItems = $this->getItems( $listHash );
-			krsort($storedItems);
+			$storedItems = array_reverse($storedItems);
+
+			/* check if ids are unique
+			 * if they are not we need to get a full SHA-1 hash id 
+			 * based on the entire xml - which itself is not very reliable
+			 * 
+			 * this is not a super clean way to go - should a feed  
+			 * suddenly have duplicate ids because if one of the items 
+			 * was previously stored in the db with a different id key
+			 * then we'll get a duplicate record - but what can you do. 
+			 * Bad feeds are bad.
+			 */
+			$ids = array();
+			foreach( $feedItems as $item ){
+				$ids[] = $item->get_id();
+				$uids = array_unique($ids);
+			}
+			$use_hash = ( count( $ids ) == count( $uids) )?FALSE:TRUE;
 
 			foreach( $feedItems as $item ){
 				$new = TRUE;
 				// check ids in feed against items
-				$itemId = $item->get_id(TRUE);
+				$itemId = $item->get_id( $use_hash );
 				if ( $storedItems != null ){
 					foreach( $storedItems as $stored ){
 						if ( $itemId == $stored['item_id'] ){
@@ -230,6 +255,7 @@ class BitReBlog extends BitBase {
 				if ( $new ){
 					$storeHash['item'] = $item;
 					$storeHash['user_id'] = $this->mInfo['user_content_id'];
+					$storeHash['use_hash'] = $use_hash;
 					if( $errors = $this->reblogItem( $storeHash ) ) {
 						$this->mErrors['reblog'][] = $errors;
 					}
@@ -259,7 +285,7 @@ class BitReBlog extends BitBase {
 		if ( $blogPost->store( $postHash ) ){
 			$itemHash; 
 			$itemHash['content_id'] = $blogPost->mInfo['content_id'];
-			$itemHash['item_id'] = $pParamHash['item']->get_id(TRUE);
+			$itemHash['item_id'] = $pParamHash['item']->get_id( $pParamHash['use_hash'] );
 			$itemHash['feed_id'] = $this->mFeedId;
 						
 			//store a reference to the blog post item in the reblog item map
@@ -310,6 +336,7 @@ class BitReBlog extends BitBase {
 				}
 			}
 			*/
+
 			$urls = Array();
 			if (!is_array($pParamHash['url'])){
 				$urls = explode( ",", $pParamHash['url'] );
