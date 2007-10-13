@@ -70,6 +70,12 @@ class BitReBlog extends BitBase {
 			$this->mErrors['url'] = "No url specified.";
 		}
 		
+		if( empty( $pParamHash['format_guid'] ) ) {
+			$pParamHash['feed_store']['format_guid'] = $gBitSystem->getConfig( 'default_format', 'tikiwiki' );
+		}else{
+			$pParamHash['feed_store']['format_guid'] = $pParamHash['format_guid'];
+		}
+		
 		if( !empty( $pParamHash['reblog'] ) ) {
 			$pParamHash['feed_store']['reblog'] = $pParamHash['reblog'];
 		}else{
@@ -206,6 +212,7 @@ class BitReBlog extends BitBase {
 	**/
 	function updateFeed(){
 		global $gBitSystem;
+
 		// parse feed
 		if ( $feedItems = $this->parseFeeds( $this->mInfo ) ){
 			/* feeds are parsed newest first - 
@@ -255,6 +262,7 @@ class BitReBlog extends BitBase {
 				if ( $new ){
 					$storeHash['item'] = $item;
 					$storeHash['user_id'] = $this->mInfo['user_content_id'];
+					$storeHash['format_guid'] = $this->mInfo['format_guid'];
 					$storeHash['use_hash'] = $use_hash;
 					if( $errors = $this->reblogItem( $storeHash ) ) {
 						$this->mErrors['reblog'][] = $errors;
@@ -279,9 +287,10 @@ class BitReBlog extends BitBase {
 		require_once( BLOGS_PKG_PATH.'BitBlogPost.php');
 		$blogPost = new BitBlogPost();
 		$postHash = array();
-		$postHash['user_id'] = $pParamHash['user_id'];
 		$postHash['data'] = $pParamHash['item']->get_content();
 		$postHash['title'] = $pParamHash['item']->get_title();
+		$postHash['user_id'] = $pParamHash['user_id'];
+		$postHash['format_guid'] = $pParamHash['format_guid'];
 		if ( $blogPost->store( $postHash ) ){
 			$itemHash; 
 			$itemHash['content_id'] = $blogPost->mInfo['content_id'];

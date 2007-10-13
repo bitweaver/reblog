@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/bitweaver/_bit_reblog/edit_feed.php,v 1.1 2007/10/08 22:37:54 bitweaver Exp $
+// $Header: /cvsroot/bitweaver/_bit_reblog/edit_feed.php,v 1.2 2007/10/13 18:51:54 wjames5 Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,7 +47,7 @@ if( !empty( $_REQUEST['action'] ) ) {
 		$gBitSmarty->assign_by_ref( 'errors', $gContent->mErrors );
 	}
 }
-
+ 
 $gBitSmarty->assign_by_ref('feedInfo', $gFeed->mInfo);
 
 $gBitSmarty->assign_by_ref( 'errors', $gFeed->mErrors );

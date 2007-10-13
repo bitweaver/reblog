@@ -6,6 +6,7 @@ $tables = array(
 	name C(30) NOTNULL,
 	description X,
 	url C(255) NOTNULL,
+	format_guid C(16) NOTNULL,
 	reblog  C(1),
 	refresh I4,
 	last_updated I8

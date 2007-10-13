@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_reblog/templates/edit_feed.tpl,v 1.2 2007/10/11 17:32:32 spiderr Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_reblog/templates/edit_feed.tpl,v 1.3 2007/10/13 18:51:54 wjames5 Exp $ *}
 {strip}
 <div class="edit reblog">
 	<div class="header">
@@ -74,7 +74,22 @@
 						{formhelp note="This sets the frequency, in minutes, that a feed will be checked for updates. The shortest frequency is ten minutes, as the auto-reblogging server script only runs every ten minutes. If you are reblogging many feeds you may want to make the refresh rates longer to reduce processor load on your server."}
 					{/forminput}
 				</div>
-				
+
+				<div class="row">
+					{formfeedback error=$errors.format}
+					{formlabel label="Content Format"}
+					{forminput}
+						<select name="format_guid">
+							{foreach name=formatPlugins from=$gLibertySystem->mPlugins item=plugin key=guid}
+								{if $plugin.plugin_type eq 'format'}
+									<option value="{$plugin.plugin_guid}" {if $feedInfo.format_guid eq $plugin.plugin_guid}selected="selected"{/if}>{$plugin.edit_label}</option>
+								{/if}
+							{/foreach}
+						</select>
+						{formhelp note="Select the format the feed content is delevered in. If the feed is plain text use the format you typically use for your site. Generally this is a wiki syntax or html."}
+					{/forminput}
+				</div>
+
 				<div class="row submit">
 					<input type="submit" name="save_feed" value="{tr}Save{/tr}" />
 				</div>
