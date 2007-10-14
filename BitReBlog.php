@@ -293,8 +293,11 @@ class BitReBlog extends BitBase {
 		$postHash['format_guid'] = $pParamHash['format_guid'];
 		if ( $blogPost->store( $postHash ) ){
 			$itemHash; 
-			$itemHash['content_id'] = $blogPost->mInfo['content_id'];
 			$itemHash['item_id'] = $pParamHash['item']->get_id( $pParamHash['use_hash'] );
+			$itemHash['item_link'] = $pParamHash['item']->get_link();
+			$author = $pParamHash['item']->get_author();
+			$itemHash['item_author'] = $author->get_name();
+			$itemHash['content_id'] = $blogPost->mInfo['content_id'];
 			$itemHash['feed_id'] = $this->mFeedId;
 						
 			//store a reference to the blog post item in the reblog item map
@@ -384,7 +387,7 @@ function reblog_content_load_sql( &$pObject, $pParamHash = NULL ) {
 	global $gBitSystem;
 	$ret = array();
 	if ( $gBitSystem->isPackageActive( 'reblog' ) && $pObject->mContentTypeGuid == 'bitblogpost' ) {
-		$ret['select_sql'] = ", rf.`feed_id`, rf.`name`, rf.`description`, rf.`url`";
+		$ret['select_sql'] = ", rim.`item_link`, rim.`item_author`, rf.`feed_id`, rf.`name` as feed_name, rf.`description` as feed_description, rf.`url` as feed_url";
 		$ret['join_sql'] = "LEFT JOIN `".BIT_DB_PREFIX."reblog_items_map` rim ON ( lc.`content_id`=rim.`content_id` )
 							LEFT JOIN `".BIT_DB_PREFIX."reblog_feeds` rf ON ( rf.`feed_id`=rim.`feed_id` )";
 	}
@@ -395,7 +398,7 @@ function reblog_content_list_sql( &$pObject, $pParamHash=NULL ) {
 	global $gBitSystem;
 	$ret = array();
 	if ( $gBitSystem->isPackageActive( 'reblog' ) && $pObject->mContentTypeGuid == 'bitblogpost') {
-		$ret['select_sql'] = ", rf.`feed_id`, rf.`name`, rf.`description`, rf.`url`";
+		$ret['select_sql'] = ", rim.`item_link`, rim.`item_author`, rf.`feed_id`, rf.`name` as feed_name, rf.`description` as feed_description, rf.`url` as feed_url";
 		$ret['join_sql'] = "LEFT JOIN `".BIT_DB_PREFIX."reblog_items_map` rim ON ( lc.`content_id`=rim.`content_id` )
 							LEFT JOIN `".BIT_DB_PREFIX."reblog_feeds` rf ON ( rf.`feed_id`=rim.`feed_id` )";
 		if ($gBitSystem->mActivePackage == 'reblog'){

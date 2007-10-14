@@ -21,6 +21,7 @@ if( $gBitSystem->isPackageActive( 'reblog' ) && $gBitSystem->isPackageActive( 'b
 	$gLibertySystem->registerService( LIBERTY_SERVICE_REBLOG, REBLOG_PKG_NAME, array(
 			'content_load_sql_function' => 'reblog_content_load_sql',
 			'content_list_sql_function' => 'reblog_content_list_sql',
+			'content_body_tpl'       => 'bitpackage:reblog/reblog_inline_service.tpl',		
 	) );
 }
 ?>

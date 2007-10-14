@@ -14,6 +14,8 @@ $tables = array(
 
 "reblog_items_map" => "
 	item_id C(255) PRIMARY,
+	item_author C(64),
+	item_link C(250),
 	content_id I4 NOTNULL,
 	feed_id I4 I4 NOTNULL
 	CONSTRAINT '
