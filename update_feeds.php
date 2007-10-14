@@ -9,7 +9,7 @@
  * suggested crontab entry runs the thumbnailer every minute:
  *		* * * * * apache php -q /path/to/bitweaver/reblog/update_feeds.php >> /var/log/httpd/update_feeds_log
  *
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.10 2007/10/14 00:00:40 wjames5 Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.11 2007/10/14 00:01:50 wjames5 Exp $
  * @package reblog
  * @subpackage functions
  */
@@ -54,7 +54,7 @@
 	$currTime = $gBitSystem->getUTCTime();
 	foreach( array_keys( $feedsList ) as $key ) {
 		$feedHash = $feedsList[$key];
-		if ( (( $feedHash['last_updated'] + $feedHash['refresh'] ) >= $currTime) ){
+		if ( (( $feedHash['last_updated'] + $feedHash['refresh'] ) <= $currTime) ){
 			$feed = new BitReBlog( $feedHash['feed_id'] );
 			$feed->load();
 			$begin = date( 'U' );
