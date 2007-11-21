@@ -246,7 +246,8 @@ class BitReBlog extends BitBase {
 				$uids = array_unique($ids);
 			}
 			$use_hash = ( count( $ids ) == count( $uids) )?FALSE:TRUE;
-
+			
+			$n=0;
 			foreach( $feedItems as $item ){
 				$new = TRUE;
 				// check ids in feed against items
@@ -264,8 +265,11 @@ class BitReBlog extends BitBase {
 					$storeHash['user_id'] = $this->mInfo['user_content_id'];
 					$storeHash['format_guid'] = $this->mInfo['format_guid'];
 					$storeHash['use_hash'] = $use_hash;
+					$storeHash['publish_date'] = $gBitSystem->getUTCTime() + $n;
 					if( $errors = $this->reblogItem( $storeHash ) ) {
 						$this->mErrors['reblog'][] = $errors;
+					}else{
+						$n++;
 					}
 				}
 			}
@@ -291,6 +295,7 @@ class BitReBlog extends BitBase {
 		$postHash['title'] = $pParamHash['item']->get_title();
 		$postHash['user_id'] = $pParamHash['user_id'];
 		$postHash['format_guid'] = $pParamHash['format_guid'];
+		$postHash['publish_date'] = $postHash['expire_date'] = $pParamHash['publish_date'];
 		if ( $blogPost->store( $postHash ) ){
 			$itemHash; 
 			$itemHash['item_id'] = $pParamHash['item']->get_id( $pParamHash['use_hash'] );
