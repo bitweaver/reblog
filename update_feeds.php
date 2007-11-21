@@ -6,10 +6,10 @@
  *		php -q update_feeds.php
  * example:
  *		php -q update_feeds.php
- * suggested crontab entry runs the thumbnailer every minute:
+ * suggested crontab entry runs the feed updater every minute:
  *		* * * * * apache php -q /path/to/bitweaver/reblog/update_feeds.php >> /var/log/httpd/update_feeds_log
  *
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.11 2007/10/14 00:01:50 wjames5 Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.12 2007/11/21 20:10:19 wjames5 Exp $
  * @package reblog
  * @subpackage functions
  */
