@@ -9,6 +9,7 @@ $tables = array(
 	format_guid C(16) NOTNULL,
 	reblog  C(1),
 	refresh I4,
+	fullpost  C(1),
 	last_updated I8
 ",
 

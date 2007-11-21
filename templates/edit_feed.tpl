@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_reblog/templates/edit_feed.tpl,v 1.3 2007/10/13 18:51:54 wjames5 Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_reblog/templates/edit_feed.tpl,v 1.4 2007/11/21 20:07:33 wjames5 Exp $ *}
 {strip}
 <div class="edit reblog">
 	<div class="header">
@@ -52,6 +52,14 @@
 					{forminput}
 						<input type="checkbox" name="reblog" value="y" {if $feedInfo.reblog eq 'y'}checked="checked"{/if} />
 						{formhelp note="All items for this feed will automatically be reposted into the blogs section of the site. If you want to select feed items for reblogging manually then uncheck this box."}
+					{/forminput}
+				</div>
+
+				<div class="row">
+					{formlabel label="Full Posts" for="fullpost"}
+					{forminput}
+						<input type="checkbox" name="fullpost" value="y" {if $feedInfo.fullpost eq 'y'}checked="checked"{/if} />
+						{formhelp note="Check if the feed supplies the complete content of the blog post. This allows you to toggle display of a 'there is more' message on the reblogged post."}
 					{/forminput}
 				</div>
 
