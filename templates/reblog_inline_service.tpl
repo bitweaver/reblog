@@ -3,7 +3,7 @@
 	{if $post_info }
 		{assign var=aPost value=$post_info}
 	{/if}
-	<div id="reblog-source" class="date">
+	<div class="reblog_source date">
 		{tr}This is{/tr} <a href="{$smarty.const.REBLOG_PKG_URL}">{tr}Reblogged{/tr}</a> {tr}from{/tr} <a href="{$aPost.item_link}">{$aPost.feed_name}</a><br/>
 		{tr}Originally authored by{/tr} <strong>{$aPost.item_author}</strong>
 	</div>
