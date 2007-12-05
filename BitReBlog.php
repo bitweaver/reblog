@@ -256,17 +256,31 @@ class BitReBlog extends BitBase {
 			$n=0;
 			foreach( $feedItems as $item ){
 				$new = TRUE;
+				$store = TRUE;
 				// check ids in feed against items
 				$itemId = $item->get_id( $use_hash );
 				if ( $storedItems != null ){
 					foreach( $storedItems as $stored ){
 						if ( $itemId == $stored['item_id'] ){
 							$new = FALSE;
+							$store = FALSE;
 							break;
 						}
 					}
 				}
+				/* if the reblog_items_map table gets mixed up at all
+				 * then we can accidentally think its new. so we do one final check 
+				 * before storing the item. its possible that maybe we should 
+				 * just do this against all item feeds, but running the batch check first
+				 * keeps the query count down.
+				 */
 				if ( $new ){
+					$rslt = $this->mDb->getOne( "SELECT `item_id` FROM `".BIT_DB_PREFIX."reblog_items_map` WHERE `item_id`=?", array( $itemId ));
+					if ( $rslt ){
+						$store = FALSE;
+					}
+				}
+				if ( $store ){
 					$storeHash['item'] = $item;
 					$storeHash['user_id'] = $this->mInfo['user_content_id'];
 					$storeHash['format_guid'] = $this->mInfo['format_guid'];
