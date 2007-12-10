@@ -321,10 +321,9 @@ class BitReBlog extends BitBase {
 			$itemHash['item_id'] = $pParamHash['item']->get_id( $pParamHash['use_hash'] );
 			$itemHash['item_link'] = $pParamHash['item']->get_link();
 			$author = $pParamHash['item']->get_author();
-			$itemHash['item_author'] = $author->get_name();
+			$itemHash['item_author'] = (!empty($author))?$author->get_name():NULL;
 			$itemHash['content_id'] = $blogPost->mInfo['content_id'];
 			$itemHash['feed_id'] = $this->mFeedId;
-						
 			//store a reference to the blog post item in the reblog item map
 			$this->mDb->StartTrans();
 			$table = BIT_DB_PREFIX."reblog_items_map";
