@@ -8,7 +8,7 @@ $registerHash = array(
 );
 $gBitSystem->registerPackage( $registerHash );
 
-if( $gBitSystem->isPackageActive( 'reblog' ) && $gBitSystem->isPackageActive( 'blogs' ) ) {
+if( $gBitSystem->isPackageActive( 'reblog' ) ) {
 	require_once( REBLOG_PKG_PATH.'BitReBlog.php' );
 
 	$menuHash = array(
