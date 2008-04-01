@@ -1,7 +1,13 @@
 <?php
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+/**
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ * @package reblog
+ * @subpackage functions
+ */ 
 
-// Initialization
+/**
+ * Initialization
+ */ 
 require_once( '../bit_setup_inc.php' );
 
 $gBitSystem->verifyPackage( 'reblog' );

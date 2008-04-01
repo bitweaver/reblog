@@ -337,8 +337,8 @@ class BitReBlog extends BitBase {
 	/**
 	* This function parses the data of feeds passed to it. 
 	* Groups of feeds will be automatically mixed and sorted by date!
-	* @pParamHash an array of feed_ids
-	* Returns an array of feed items sorted by date
+	* @param pParamHash an array of feed_ids
+	* @return array an array of feed items sorted by date
 	**/
 	function parseFeeds( $pParamHash ){
 		//set path to rss feed cache

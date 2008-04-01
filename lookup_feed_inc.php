@@ -1,6 +1,6 @@
 <?php
 /**
- * @package blogs
+ * @package reblog
  * @subpackage functions
  */
 
