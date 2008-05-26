@@ -17,13 +17,13 @@ require_once( REBLOG_PKG_PATH.'BitReBlog.php');
 
 if( $gFeed->isValid() && isset($_REQUEST["remove"])) {
 	// Check if has admin perm
-	$gFeed->verifyPermission( 'p_reblog_admin' );
+	$gBitSystem->verifyPermission( 'p_reblog_admin' );
 	if( !empty( $_REQUEST['cancel'] ) ) {
 		// user cancelled - just continue on, doing nothing
 	} elseif( empty( $_REQUEST['confirm'] ) ) {
 		$formHash['remove'] = $_REQUEST["remove"];
 		$formHash['feed_id'] = $gFeed->mFeedId;
-		$gBitSystem->confirmDialog( $formHash, array( 'warning' => 'Are you sure you want to delete this feed '.$gFeed->getTitle().'?', 'error' => 'This cannot be undone!' ) );
+		$gBitSystem->confirmDialog( $formHash, array( 'warning' => 'Are you sure you want to delete this feed:<br /><strong>'.$gFeed->getTitle().'</strong>: ' . $gFeed->getUrl(), 'error' => 'This cannot be undone!' ) );
 	} else {
 		$gFeed->expunge();
 	}

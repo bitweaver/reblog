@@ -44,6 +44,33 @@ class BitReBlog extends BitBase {
 	}
 
 
+	function getTitle( $pHash=NULL ) {
+		$ret = NULL;
+		if( empty( $pHash ) ) {
+			$pHash = &$this->mInfo;
+		}
+		if( !empty( $pHash['name'] ) ) {
+			$ret = $pHash['name'];
+		} elseif( !empty( $pHash['feed_id'] ) ) {
+			$ret = $pHash['feed_id'];
+		}
+		return $ret;
+	}
+
+	function getUrl( $pHash=NULL ) {
+		$ret = NULL;
+		if( empty( $pHash ) ) {
+			$pHash = &$this->mInfo;
+		}
+		if( !empty( $pHash['url'] ) ) {
+			$ret = $pHash['url'];
+		} elseif( !empty( $pHash['feed_id'] ) ) {
+			$ret = $pHash['feed_id'];
+		}
+		return $ret;
+	}
+
+
 	function verify( &$pParamHash ) {
 		global $gBitSystem;		
 		$pParamHash['feed_store'] = array();
@@ -138,12 +165,14 @@ class BitReBlog extends BitBase {
 	/**
 	* This function removes a feed entry
 	**/
-	function expunge( $feed_id ) {
-		$ret = FALSE;
-		$this->mDb->StartTrans();
-		$query = "DELETE FROM `".BIT_DB_PREFIX."reblog_feeds` WHERE `feed_id` = ?";
-		$result = $this->mDb->query( $query, array( $feed_id ) );
-		$this->mDb->CompleteTrans();
+	function expunge() {
+		if ( $this->isValid() ) {
+			$ret = FALSE;
+			$this->mDb->StartTrans();
+			$query = "DELETE FROM `".BIT_DB_PREFIX."reblog_feeds` WHERE `feed_id` = ?";
+			$result = $this->mDb->query( $query, array( $this->mFeedId ) );
+			$this->mDb->CompleteTrans();
+		}
 		return $ret;
 	}
 	
