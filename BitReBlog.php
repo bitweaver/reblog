@@ -57,20 +57,6 @@ class BitReBlog extends BitBase {
 		return $ret;
 	}
 
-	function getUrl( $pHash=NULL ) {
-		$ret = NULL;
-		if( empty( $pHash ) ) {
-			$pHash = &$this->mInfo;
-		}
-		if( !empty( $pHash['url'] ) ) {
-			$ret = $pHash['url'];
-		} elseif( !empty( $pHash['feed_id'] ) ) {
-			$ret = $pHash['feed_id'];
-		}
-		return $ret;
-	}
-
-
 	function verify( &$pParamHash ) {
 		global $gBitSystem;		
 		$pParamHash['feed_store'] = array();
