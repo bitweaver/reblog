@@ -23,7 +23,7 @@ if( $gFeed->isValid() && isset($_REQUEST["remove"])) {
 	} elseif( empty( $_REQUEST['confirm'] ) ) {
 		$formHash['remove'] = $_REQUEST["remove"];
 		$formHash['feed_id'] = $gFeed->mFeedId;
-		$gBitSystem->confirmDialog( $formHash, array( 'warning' => 'Are you sure you want to delete this feed:<br /><strong>'.$gFeed->getTitle().'</strong>: ' . $gFeed->getUrl(), 'error' => 'This cannot be undone!' ) );
+		$gBitSystem->confirmDialog( $formHash, array( 'warning' => 'Are you sure you want to delete this feed:<br /><strong>'.$gFeed->getTitle().'</strong><br/>'.$gFeed->getField('url'), 'error' => 'This cannot be undone!' ) );
 	} else {
 		$gFeed->expunge();
 	}
