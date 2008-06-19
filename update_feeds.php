@@ -9,11 +9,14 @@
  * suggested crontab entry runs the feed updater every minute:
  *		* * * * * apache php -q /path/to/bitweaver/reblog/update_feeds.php >> /var/log/httpd/update_feeds_log
  *
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.12 2007/11/21 20:10:19 wjames5 Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.13 2008/06/19 05:36:51 lsces Exp $
  * @package reblog
  * @subpackage functions
  */
 
+/**
+ * required setup
+ */
 	global $gBitSystem, $_SERVER;
 
 	if( !empty( $argc ) ) {
@@ -25,9 +28,6 @@
 		define( 'BIT_ROOT_URI', '' );
 	}
 
-/**
- * required setup
- */
 	if( !empty( $argc ) ) {
 		// reduce feedback for command line to keep log noise way down
 		define( 'BIT_PHP_ERROR_REPORTING', E_ERROR | E_PARSE );
