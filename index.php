@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/index.php,v 1.1 2007/10/08 22:37:54 bitweaver Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/index.php,v 1.2 2008/06/25 22:21:21 spiderr Exp $
 
 /**
  * required setup
@@ -26,5 +26,5 @@ $gContent->invokeServices( 'content_list_function', $_REQUEST );
 $gDefaultCenter = 'bitpackage:reblog/center_list_reblog_posts.tpl';
 $gBitSmarty->assign_by_ref( 'gDefaultCenter', $gDefaultCenter );
 
-$gBitSystem->display( 'bitpackage:kernel/dynamic.tpl', 'List ReBlogged Posts' );
+$gBitSystem->display( 'bitpackage:kernel/dynamic.tpl', 'List ReBlogged Posts' , array( 'display_mode' => 'display' ));
 ?>

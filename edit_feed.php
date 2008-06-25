@@ -1,5 +1,5 @@
 <?php
-/** $Header: /cvsroot/bitweaver/_bit_reblog/edit_feed.php,v 1.4 2008/04/01 21:58:21 lsces Exp $
+/** $Header: /cvsroot/bitweaver/_bit_reblog/edit_feed.php,v 1.5 2008/06/25 22:21:21 spiderr Exp $
  * Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -52,6 +52,6 @@ $gBitSmarty->assign_by_ref('feedInfo', $gFeed->mInfo);
 
 $gBitSmarty->assign_by_ref( 'errors', $gFeed->mErrors );
 
-$gBitSystem->display( 'bitpackage:reblog/edit_feed.tpl', $gFeed->isValid() ? tra( "Edit ReBlog Feed" ).": ".$gFeed->mInfo['name'] : tra( "Create ReBlog Feed" ) );
+$gBitSystem->display( 'bitpackage:reblog/edit_feed.tpl', $gFeed->isValid() ? tra( "Edit ReBlog Feed" ).": ".$gFeed->mInfo['name'] : tra( "Create ReBlog Feed" ) , array( 'display_mode' => 'edit' ));
 ?>
 

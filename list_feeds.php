@@ -35,5 +35,5 @@ $gBitSmarty->assign_by_ref( 'feedsList', $feedsList );
 
 $gBitSystem->setBrowserTitle("View All Reblog Feeds");
 // Display the template
-$gBitSystem->display( 'bitpackage:reblog/list_feeds.tpl');
+$gBitSystem->display( 'bitpackage:reblog/list_feeds.tpl', NULL, array( 'display_mode' => 'list' ));
 ?>
