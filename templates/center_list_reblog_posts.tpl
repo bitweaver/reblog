@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_reblog/templates/center_list_reblog_posts.tpl,v 1.1 2007/10/08 22:37:54 bitweaver Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_reblog/templates/center_list_reblog_posts.tpl,v 1.2 2008/09/15 22:19:47 laetzer Exp $ *}
 {if $blogPosts || $showEmpty}
 <div class="floaticon">{bithelp}</div>
 
@@ -24,7 +24,7 @@
 		{/foreach}
 	</div><!-- end .body -->
 
-	{pagination url="`$smarty.const.BLOGS_PKG_URL`index.php" user_id="`$gQueryUserId`"}
+	{pagination url="`$smarty.const.REBLOG_PKG_URL`index.php" user_id="`$gQueryUserId`"}
 
 	{*minifind sort_mode=$sort_mode*}
 </div>
