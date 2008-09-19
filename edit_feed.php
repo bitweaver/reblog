@@ -1,5 +1,5 @@
 <?php
-/** $Header: /cvsroot/bitweaver/_bit_reblog/edit_feed.php,v 1.5 2008/06/25 22:21:21 spiderr Exp $
+/** $Header: /cvsroot/bitweaver/_bit_reblog/edit_feed.php,v 1.6 2008/09/19 01:34:38 laetzer Exp $
  * Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -29,14 +29,15 @@ if( !empty( $_REQUEST['action'] ) ) {
 				$feedback['error'] = $gFeed->mErrors;
 			}
 		}
-		$gBitSystem->setBrowserTitle( 'Confirm removal of '.$gFeed->getTitle().' ReBlog Feed' );		
+		$gBitSystem->setBrowserTitle( tra('Confirm removal of: ').$gFeed->getTitle());
 		$formHash['remove'] = TRUE;
 		$formHash['action'] = 'remove';
 		$formHash['feed_id'] = $_REQUEST['feed_id'];
 		$msgHash = array(
-			'label' => 'Remove RSS Feed',
+			'label' => tra('Remove RSS Feed'),
 			'confirm_item' => $gFeed->mInfo['name'],
-			'warning' => 'This will remove the above reblog rss feed. This cannot be undone.',
+			'warning' => tra('This will remove the above reblog RSS feed.'),
+			'warning' => tra('This cannot be undone!'),
 		);
 		$gBitSystem->confirmDialog( $formHash, $msgHash );
 	}
