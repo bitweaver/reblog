@@ -9,7 +9,7 @@
  * suggested crontab entry runs the feed updater every minute:
  *		* * * * * apache php -q /path/to/bitweaver/reblog/update_feeds.php >> /var/log/httpd/update_feeds_log
  *
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.13 2008/06/19 05:36:51 lsces Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.14 2008/10/14 08:19:19 laetzer Exp $
  * @package reblog
  * @subpackage functions
  */
@@ -71,7 +71,7 @@
 	foreach( array_keys( $log ) as $feedHash ) {
 		// generate something that kinda looks like apache common log format
 		$logLine = $feedHash.' - - ['.$log[$feedHash]['time'].'] "'.$log[$feedHash]['message'].'" '.$log[$feedHash]['duration']."seconds <br/>\n";
-		if( strpos( $log[$feedHash['message']], 'ERROR' ) !== FALSE ) {
+		if( isset($log[$feedHash['message']]) and strpos( $log[$feedHash['message']], 'ERROR' ) !== FALSE ) {
 			bit_log_error( $logLine );
 		}
 		print $logLine;
