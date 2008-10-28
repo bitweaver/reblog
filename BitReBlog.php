@@ -436,7 +436,7 @@ function reblog_content_load_sql( &$pObject, $pParamHash = NULL ) {
 function reblog_content_list_sql( &$pObject, $pParamHash=NULL ) {
 	global $gBitSystem, $gBitThemes;
 	$ret = array();
-	if ( $gBitSystem->isPackageActive( 'reblog' ) && $pObject->mContentTypeGuid == 'bitblogpost') {
+	if ( $gBitSystem->isPackageActive( 'reblog' ) && !empty( $pObject->mContentTypeGuid ) && $pObject->mContentTypeGuid == 'bitblogpost') {
 		$ret['select_sql'] = ", rim.`item_link`, rim.`item_author`, rf.`feed_id`, rf.`name` as feed_name, rf.`description` as feed_description, rf.`url` as feed_url, rf.`fullpost`";
 		$ret['join_sql'] = "LEFT JOIN `".BIT_DB_PREFIX."reblog_items_map` rim ON ( lc.`content_id`=rim.`content_id` )
 							LEFT JOIN `".BIT_DB_PREFIX."reblog_feeds` rf ON ( rf.`feed_id`=rim.`feed_id` )";
