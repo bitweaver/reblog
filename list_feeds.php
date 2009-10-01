@@ -1,6 +1,6 @@
 <?php
 /**
- * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See http://www.gnu.org/copyleft/lesser.html for details.
  * @package reblog
  * @subpackage functions
  */ 

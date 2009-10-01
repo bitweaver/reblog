@@ -3,7 +3,7 @@
  * @package reblog
  *
  * Copyright (c) 2007 bitweaver.org
- * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See http://www.gnu.org/copyleft/lesser.html for details
  *
  */
 
