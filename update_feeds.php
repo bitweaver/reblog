@@ -9,7 +9,7 @@
  * suggested crontab entry runs the feed updater every minute:
  *		* * * * * apache php -q /path/to/bitweaver/reblog/update_feeds.php >> /var/log/httpd/update_feeds_log
  *
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.14 2008/10/14 08:19:19 laetzer Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.15 2010/02/08 21:27:25 wjames5 Exp $
  * @package reblog
  * @subpackage functions
  */
@@ -35,7 +35,7 @@
 
 	// running from cron can cause us not to be in the right dir.
 	chdir( dirname( __FILE__ ) );
-	require_once( '../bit_setup_inc.php' );
+	require_once( '../kernel/setup_inc.php' );
 	require_once( REBLOG_PKG_PATH.'BitReBlog.php' );
 
 	// add some protection for arbitrary thumbail execution.

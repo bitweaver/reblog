@@ -1,11 +1,11 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/index.php,v 1.2 2008/06/25 22:21:21 spiderr Exp $
+ * @version $Header: /cvsroot/bitweaver/_bit_reblog/index.php,v 1.3 2010/02/08 21:27:25 wjames5 Exp $
 
 /**
  * required setup
  */
-require_once( '../bit_setup_inc.php' );
+require_once( '../kernel/setup_inc.php' );
 
 /* we display a list of recent blog posts since that is what reblog feed all rss content too
  * the list is however limited to items from the feeds and does not include all blog posts
