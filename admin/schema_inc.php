@@ -35,4 +35,8 @@ $gBitInstaller->registerPackageInfo( REBLOG_PKG_NAME, array(
 	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
 ) );
 
-?>
+// Requirements
+$gBitInstaller->registerRequirements( REBLOG_PKG_NAME, array(
+    'liberty' => array( 'min' => '2.1.4' ),
+));
+
