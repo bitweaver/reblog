@@ -9,7 +9,7 @@
  * suggested crontab entry runs the feed updater every minute:
  *		* * * * * apache php -q /path/to/bitweaver/reblog/update_feeds.php >> /var/log/httpd/update_feeds_log
  *
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/update_feeds.php,v 1.15 2010/02/08 21:27:25 wjames5 Exp $
+ * @version $Header$
  * @package reblog
  * @subpackage functions
  */

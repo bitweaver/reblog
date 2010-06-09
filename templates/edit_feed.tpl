@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_reblog/templates/edit_feed.tpl,v 1.4 2007/11/21 20:07:33 wjames5 Exp $ *}
+{* $Header$ *}
 {strip}
 <div class="edit reblog">
 	<div class="header">

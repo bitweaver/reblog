@@ -1,6 +1,6 @@
 <?php
 /**
- * @version $Header: /cvsroot/bitweaver/_bit_reblog/index.php,v 1.3 2010/02/08 21:27:25 wjames5 Exp $
+ * @version $Header$
 
 /**
  * required setup
