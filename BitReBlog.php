@@ -13,7 +13,7 @@
 class BitReBlog extends BitBase {
 	var $mFeedId;
 
-	function BitReBlog( $pFeedId = NULL ) {
+	function __construct( $pFeedId = NULL ) {
 		parent::__construct();
 		$this->mFeedId = (int)$pFeedId;
 	}
