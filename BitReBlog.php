@@ -361,7 +361,7 @@ class BitReBlog extends BitBase {
 		
 		//we do this earlier instead of later because if we can't cache the source we shouldn't be pulling the rss feed.
 		if( !is_dir( $cache_path ) && !mkdir_p( $cache_path ) ) {
-			bit_log_error( 'Can not create the cache directory: '.$cache_path );
+			bit_error_log( 'Can not create the cache directory: '.$cache_path );
 			
 			return FALSE;
 		}else{

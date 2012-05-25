@@ -72,7 +72,7 @@
 		// generate something that kinda looks like apache common log format
 		$logLine = $feedHash.' - - ['.$log[$feedHash]['time'].'] "'.$log[$feedHash]['message'].'" '.$log[$feedHash]['duration']."seconds <br/>\n";
 		if( isset($log[$feedHash['message']]) and strpos( $log[$feedHash['message']], 'ERROR' ) !== FALSE ) {
-			bit_log_error( $logLine );
+			bit_error_log( $logLine );
 		}
 		print $logLine;
 	}
