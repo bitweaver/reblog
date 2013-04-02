@@ -14,7 +14,7 @@
 					<div class="floaticon">
 						{if $gBitUser->hasPermission( 'p_reblog_admin' )}
 							<a title="{tr}edit{/tr}" href="{$smarty.const.REBLOG_PKG_URL}edit_feed.php?feed_id={$feed.feed_id}">{biticon ipackage="icons" iname="document-properties" iexplain="configure"}</a>
-							<a title="{tr}remove{/tr}" href="{$smarty.const.REBLOG_PKG_URL}list_feeds.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove=1&amp;feed_id={$feed.feed_id}">{biticon ipackage="icons" iname="edit-delete" iexplain="delete"}</a>
+							<a title="{tr}remove{/tr}" href="{$smarty.const.REBLOG_PKG_URL}list_feeds.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove=1&amp;feed_id={$feed.feed_id}">{booticon iname="icon-trash" ipackage="icons" iexplain="delete"}</a>
 						{/if}
 					</div>
 
