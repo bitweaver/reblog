@@ -15,7 +15,7 @@
 			<input type="hidden" name="feed_id" value="{$feedInfo.feed_id|escape}" />
 
 			{legend legend="Reblog Feed"}
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Name" for="name"}
 					{forminput}
 						<input type="text" size="50" name="name" id="name" value="{$feedInfo.name|escape}" />
@@ -23,7 +23,7 @@
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Description" for="description"}
 					{forminput}
 						<input type="text" size="50" name="description" id="description" value="{$feedInfo.description|escape}" />
@@ -31,7 +31,7 @@
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="User ID" for="user_id"}
 					{forminput}
 						<input type="text" size="5" name="user_id" id="user_id" value="{$feedInfo.user_content_id|default:$gBitUser->mUserId}" />
@@ -39,7 +39,7 @@
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="URL" for="url"}
 					{forminput}
 						<input type="text" size="50" name="url" id="url" value="{$feedInfo.url|escape}" />
@@ -47,7 +47,7 @@
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Auto Reblog" for="reblog"}
 					{forminput}
 						<input type="checkbox" name="reblog" value="y" {if $feedInfo.reblog eq 'y'}checked="checked"{/if} />
@@ -55,7 +55,7 @@
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Full Posts" for="fullpost"}
 					{forminput}
 						<input type="checkbox" name="fullpost" value="y" {if $feedInfo.fullpost eq 'y'}checked="checked"{/if} />
@@ -63,7 +63,7 @@
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Refresh Rate" for="refresh"}
 					{forminput}
 						<select name="refresh" id="refresh">
@@ -83,7 +83,7 @@
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formfeedback error=$errors.format}
 					{formlabel label="Content Format"}
 					{forminput}
@@ -98,7 +98,7 @@
 					{/forminput}
 				</div>
 
-				<div class="row submit">
+				<div class="control-group submit">
 					<input type="submit" name="save_feed" value="{tr}Save{/tr}" />
 				</div>
 			{/legend}
