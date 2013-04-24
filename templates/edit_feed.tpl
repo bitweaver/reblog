@@ -48,19 +48,17 @@
 				</div>
 
 				<div class="control-group">
-					{formlabel label="Auto Reblog" for="reblog"}
-					{forminput}
-						<input type="checkbox" name="reblog" value="y" {if $feedInfo.reblog eq 'y'}checked="checked"{/if} />
+					<label class="checkbox">
+						<input type="checkbox" name="reblog" value="y" {if $feedInfo.reblog eq 'y'}checked="checked"{/if} />Auto Reblog
 						{formhelp note="All items for this feed will automatically be reposted into the blogs section of the site. If you want to select feed items for reblogging manually then uncheck this box."}
-					{/forminput}
+					</label>
 				</div>
 
 				<div class="control-group">
-					{formlabel label="Full Posts" for="fullpost"}
-					{forminput}
-						<input type="checkbox" name="fullpost" value="y" {if $feedInfo.fullpost eq 'y'}checked="checked"{/if} />
+					<label class="checkbox">
+						<input type="checkbox" name="fullpost" value="y" {if $feedInfo.fullpost eq 'y'}checked="checked"{/if} />Full Posts
 						{formhelp note="Check if the feed supplies the complete content of the blog post. This allows you to toggle display of a 'there is more' message on the reblogged post."}
-					{/forminput}
+					</label>
 				</div>
 
 				<div class="control-group">
