@@ -15,7 +15,7 @@
 			<input type="hidden" name="feed_id" value="{$feedInfo.feed_id|escape}" />
 
 			{legend legend="Reblog Feed"}
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="Name" for="name"}
 					{forminput}
 						<input type="text" size="50" name="name" id="name" value="{$feedInfo.name|escape}" />
@@ -23,7 +23,7 @@
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="Description" for="description"}
 					{forminput}
 						<input type="text" size="50" name="description" id="description" value="{$feedInfo.description|escape}" />
@@ -31,7 +31,7 @@
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="User ID" for="user_id"}
 					{forminput}
 						<input type="text" size="5" name="user_id" id="user_id" value="{$feedInfo.user_content_id|default:$gBitUser->mUserId}" />
@@ -39,7 +39,7 @@
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="URL" for="url"}
 					{forminput}
 						<input type="text" size="50" name="url" id="url" value="{$feedInfo.url|escape}" />
@@ -47,21 +47,21 @@
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					<label class="checkbox">
 						<input type="checkbox" name="reblog" value="y" {if $feedInfo.reblog eq 'y'}checked="checked"{/if} />Auto Reblog
 						{formhelp note="All items for this feed will automatically be reposted into the blogs section of the site. If you want to select feed items for reblogging manually then uncheck this box."}
 					</label>
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					<label class="checkbox">
 						<input type="checkbox" name="fullpost" value="y" {if $feedInfo.fullpost eq 'y'}checked="checked"{/if} />Full Posts
 						{formhelp note="Check if the feed supplies the complete content of the blog post. This allows you to toggle display of a 'there is more' message on the reblogged post."}
 					</label>
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="Refresh Rate" for="refresh"}
 					{forminput}
 						<select name="refresh" id="refresh">
@@ -81,7 +81,7 @@
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formfeedback error=$errors.format}
 					{formlabel label="Content Format"}
 					{forminput}
@@ -96,7 +96,7 @@
 					{/forminput}
 				</div>
 
-				<div class="control-group submit">
+				<div class="form-group submit">
 					<input type="submit" class="btn btn-default" name="save_feed" value="{tr}Save{/tr}" />
 				</div>
 			{/legend}
