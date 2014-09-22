@@ -44,11 +44,8 @@ class BitReBlog extends BitBase {
 	}
 
 
-	function getTitle( $pHash=NULL ) {
+	function getTitleFromHash( $pHash=NULL ) {
 		$ret = NULL;
-		if( empty( $pHash ) ) {
-			$pHash = &$this->mInfo;
-		}
 		if( !empty( $pHash['name'] ) ) {
 			$ret = $pHash['name'];
 		} elseif( !empty( $pHash['feed_id'] ) ) {
