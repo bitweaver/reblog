@@ -44,7 +44,7 @@ class BitReBlog extends BitBase {
 	}
 
 
-	function getTitleFromHash( $pHash=NULL ) {
+	public static function getTitleFromHash( $pHash=NULL ) {
 		$ret = NULL;
 		if( !empty( $pHash['name'] ) ) {
 			$ret = $pHash['name'];
